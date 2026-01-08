@@ -1,0 +1,7 @@
+{
+  "name": "DudeNutri",
+  "description": "The ultimate Gen-Z AI nutrition coach. Scan food, track macros, and get personalized diet plans with DudeNutri.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
