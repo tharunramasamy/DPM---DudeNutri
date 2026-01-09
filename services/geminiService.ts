@@ -2,7 +2,9 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { UserProfile, FoodAnalysis, DietPlan } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+// Ensure API key is typed for TypeScript
+const apiKey = (process.env.API_KEY as string) || '';
+const ai = new GoogleGenAI({ apiKey });
 
 export const analyzeFoodImage = async (base64Image: string, userProfile: UserProfile): Promise<FoodAnalysis> => {
   const model = 'gemini-3-flash-preview';
@@ -99,7 +101,7 @@ export const generateDietPlan = async (userProfile: UserProfile): Promise<DietPl
   return JSON.parse(response.text || '[]');
 };
 
-export const getNutritionChatResponse = async (history: { role: string, text: string }[], userProfile: UserProfile) => {
+export const getNutritionChatResponse = async (history: { role: string, text: string }[], userProfile: UserProfile): Promise<string> => {
   const chat = ai.chats.create({
     model: 'gemini-3-flash-preview',
     config: {
@@ -113,5 +115,5 @@ export const getNutritionChatResponse = async (history: { role: string, text: st
 
   const lastMessage = history[history.length - 1].text;
   const result = await chat.sendMessage({ message: lastMessage });
-  return result.text;
+  return result.text || "Sorry bro, I lost my train of thought. Try asking again! 💪";
 };

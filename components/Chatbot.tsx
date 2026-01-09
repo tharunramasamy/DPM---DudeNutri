@@ -27,7 +27,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ user }) => {
 
     try {
       const aiResponse = await getNutritionChatResponse([...messages, userMessage], user);
-      setMessages(prev => [...prev, { role: 'model', text: aiResponse }]);
+      const modelMessage: ChatMessage = { role: 'model', text: aiResponse };
+      setMessages(prev => [...prev, modelMessage]);
     } catch (error) {
       setMessages(prev => [...prev, { role: 'model', text: "Sorry, I'm having trouble connecting right now. 🥗" }]);
     } finally {
