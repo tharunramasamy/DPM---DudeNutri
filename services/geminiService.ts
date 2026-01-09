@@ -2,7 +2,7 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { UserProfile, FoodAnalysis, DietPlan } from "../types";
 
-// Ensure API key is typed for TypeScript
+// Ensure API key is handled correctly for Vite/Vercel
 const apiKey = (process.env.API_KEY as string) || '';
 const ai = new GoogleGenAI({ apiKey });
 
@@ -60,7 +60,8 @@ export const analyzeFoodImage = async (base64Image: string, userProfile: UserPro
     }
   });
 
-  return JSON.parse(response.text || '{}');
+  const text = response.text || '{}';
+  return JSON.parse(text);
 };
 
 export const generateDietPlan = async (userProfile: UserProfile): Promise<DietPlan[]> => {
@@ -98,7 +99,8 @@ export const generateDietPlan = async (userProfile: UserProfile): Promise<DietPl
     }
   });
 
-  return JSON.parse(response.text || '[]');
+  const text = response.text || '[]';
+  return JSON.parse(text);
 };
 
 export const getNutritionChatResponse = async (history: { role: string, text: string }[], userProfile: UserProfile): Promise<string> => {
