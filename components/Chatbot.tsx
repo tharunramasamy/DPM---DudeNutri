@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { UserProfile, ChatMessage } from '../types';
 import { getNutritionChatResponse } from '../services/geminiService';
@@ -27,7 +26,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ user }) => {
 
     try {
       const aiResponse = await getNutritionChatResponse([...messages, userMessage], user);
-      const modelMessage: ChatMessage = { role: 'model', text: aiResponse };
+      // Ensure aiResponse is a string to satisfy TypeScript
+      const modelMessage: ChatMessage = { role: 'model', text: aiResponse || "Sorry bro, I'm drawing a blank. Try again? 💪" };
       setMessages(prev => [...prev, modelMessage]);
     } catch (error) {
       setMessages(prev => [...prev, { role: 'model', text: "Sorry, I'm having trouble connecting right now. 🥗" }]);
